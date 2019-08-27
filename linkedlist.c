@@ -9,21 +9,27 @@ struct node{
 struct node* head=NULL;
 
 
+
 int countnodes(){
   struct node* temp=head;
   int count=0;
-  while(temp->link!=NULL){
+  while(temp!=NULL){
     count++;
+    temp=temp->link;
   }
   return count;
 }
 void traverse(){
   struct node* temp=head;
+  printf("\n\n");
   while(temp!=NULL){
     printf("%d\t",temp->data);
     temp=temp->link;
   }
+ printf("No of elements : %d\n",countnodes());
+ printf("\n\n");
 }
+
 void insert(int x,int pos){
   struct node* newnode=(struct node*)malloc(sizeof(struct node));
   newnode->data=x;
@@ -33,15 +39,18 @@ void insert(int x,int pos){
   if(pos==1){
     newnode->link=head;
     head=newnode;
+
   }
-  else if(pos==countnodes()){
+  /*else if (pos==(countnodes()+1)){
     struct node* temp=head;
-    while(temp->link!=NULL){
+    struct node* temp1;
+    while(temp!=NULL){
+      temp1=temp;
       temp=temp->link;
     }
-    temp->link=newnode;
-  }
-  else if(pos<countnodes() && pos>1){
+    temp1->link=newnode;
+  }*/
+  else if((pos<=(countnodes()+1)) && pos>1){
     struct node* temp=head;
     struct node* temp1;
     int loc=1;
@@ -53,6 +62,8 @@ void insert(int x,int pos){
     newnode->link=temp1->link;
     temp1->link=newnode;
   }
+else printf("\nIMPOSSIBLE!!\n");
+
 }
 void delete(int pos){
     if(head==NULL){
@@ -63,7 +74,7 @@ void delete(int pos){
       head=head->link;
       free(p);
     }
-    else if(pos>1 && pos<countnodes()){
+    else if(pos>1 && pos<(countnodes()+1)){
       int loc=1;
       struct node* temp=head;
       struct node* temp1;
@@ -76,6 +87,8 @@ void delete(int pos){
       temp1->link=temp->link;
       free(p);
     }
+    else printf("\nIMPOSSIBLE!!\n");
+
   }
 void search(int key){
     struct node* temp=head;
