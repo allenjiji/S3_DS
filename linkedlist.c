@@ -92,7 +92,7 @@ void delete(int pos){
   }
 void search(int key){
     struct node* temp=head;
-    while(temp->link!=NULL){
+    while(temp!=NULL){
       if(temp->data==key){
         printf("Element found\n");
         return;
