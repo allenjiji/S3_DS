@@ -20,6 +20,7 @@ void display(node* head){
   while(temp!=NULL){
 
     printf("%dx^%d\t",temp->coef,temp->exp);
+	  if(temp->link!=NULL) printf(" + ");
       temp=temp->link;
 
 
