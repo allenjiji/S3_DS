@@ -1,15 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct node(
+typedef struct node{
   int data;
   struct node* right;
   struct node* left;
-)node;
+}node;
 
 node* parent;
 node* root=NULL;
 node* ptr;
+int flag;
+int case=0;
 
 void insert(int data){
   node* newnode=(node*)malloc(sizeof(node));
@@ -76,11 +78,11 @@ void delete(int key){
     return;
   }
 
-  if (ptr->left==NULL && ptr->right==NULL) int case=1;
-  else if (ptr->left!=NULL && ptr->right!=NULL) int case=3;
-  else int case=3;
+  if (ptr->left==NULL && ptr->right==NULL) case=1;
+  else if (ptr->left!=NULL && ptr->right!=NULL) case=3;
+  else case=2;
 
-  if(case==1){
+  if (case==1){
     if(parent->right==ptr) parent->right==NULL;
     else parent->left==NULL;
     free(ptr);
@@ -91,13 +93,13 @@ void delete(int key){
       if(ptr->left==NULL) parent->left=ptr->right;
       else if (ptr->right==NULL) parent->left=ptr->left;
     }
-    else if(parent->right==ptr){
+    else if (parent->right==ptr){
       if(ptr->right==NULL) parent->right=ptr->left;
       else if(ptr->left==NULL) parent->right==ptr->right;
     }
   }
 
-  else if (case==3){
+  else if(case==3){
     node* succ=ptr->right;
     while(succ->left!=NULL){
       succ=succ->left;
@@ -130,10 +132,50 @@ void preorder(node* n){
   preorder(n->left);
   preorder(n->right);
 }
-void
+void inorder(node* n){
+  inorder(n->left);
+  printf("%d  ",n->data);
+  inorder(n->right);
+}
+
+void postorder(node* n){
+  postorder(n->left);
+  postorder(n->right);
+  printf("%d  ",n->data);
+}
 
 
 
-void traverse(){
+void traverse(node* n){
+  printf("Preorder:\n");
+  postorder(n);
+  printf("Inorder:\n");
+  inorder(n);
+  printf("Postorder:\n");
+  postorder(n);
+}
 
+
+void main(){
+  int op,data;
+  printf("\tMENU\n");
+  printf("1.Insert\n2.Delete\n3.Traverse\n4.Exit\nSelect the operation:");
+  scanf("%d",&op);
+  while(1){
+  switch (op) {
+    case 1: printf("Enter the dta to be inserted:");
+            scanf("%d",&data);
+            insert(data);
+            break;
+    case 2: printf("Enter the data to be deleted:");
+            scanf("%d",&data);
+            delete(data);
+            break;
+    case 3: traverse(root);
+            break;
+    case 4: exit(0);
+            break;
+    default: printf("Invalid Selection!\n");
+  }
+}
 }
